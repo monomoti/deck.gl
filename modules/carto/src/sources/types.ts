@@ -19,6 +19,8 @@ export type SourceOptionalOptions = {
    */
   apiBaseUrl: string;
 
+  apiBaseUrlToReplace?: string;
+
   /**
    * Custom HTTP headers added to map instantiation and data requests.
    */

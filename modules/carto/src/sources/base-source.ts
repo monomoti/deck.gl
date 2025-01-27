@@ -67,6 +67,14 @@ export async function baseSource<UrlParameters extends Record<string, unknown>>(
     if (accessToken) {
       json.accessToken = accessToken;
     }
+
+    if (options.apiBaseUrl && options.apiBaseUrlToReplace && json.tiles){
+      json.tiles = json.tiles.map((t)=>{
+        const newT = t.replace(options.apiBaseUrlToReplace as string, options.apiBaseUrl as string);
+        return newT;
+      });
+    }
+    
     return json;
   }
 
