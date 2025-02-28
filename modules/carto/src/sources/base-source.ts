@@ -34,7 +34,14 @@ export async function baseSource<UrlParameters extends Record<string, unknown>>(
   }
   const baseUrl = buildSourceUrl(mergedOptions);
   const {clientId, maxLengthURL, format} = mergedOptions;
-  const headers = {Authorization: `Bearer ${options.accessToken}`, ...options.headers};
+  // const headers = {Authorization: `Bearer ${options.accessToken}`, ...options.headers};
+  let headers;
+  if (options.apiAuthHeaderName){
+    headers = {...options.headers};
+    headers[options.apiAuthHeaderName] = `Bearer ${options.accessToken}`;
+  }else{
+    headers = {Authorization: `Bearer ${options.accessToken}`, ...options.headers};
+  }
   const parameters = {client: clientId, ...urlParameters};
 
   const errorContext: APIErrorContext = {
@@ -51,7 +58,10 @@ export async function baseSource<UrlParameters extends Record<string, unknown>>(
     maxLengthURL
   });
 
-  const dataUrl = mapInstantiation[format].url[0];
+  const  dataUrlOrg = mapInstantiation[format].url[0];
+  const dataUrl = options.apiBaseUrl && options.apiBaseUrlToReplace ? 
+    dataUrlOrg.replace(options.apiBaseUrlToReplace as string, options.apiBaseUrl as string) : dataUrlOrg;
+
   if (cache) {
     cache.value = parseInt(new URL(dataUrl).searchParams.get('cache') || '', 10);
   }

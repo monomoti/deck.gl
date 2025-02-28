@@ -17,7 +17,7 @@ import Long from 'long';
 function getIdFromToken(token: string): number {
   // pad token with zeros to make the length 16
   const paddedToken = token.padEnd(16, '0');
-  return Long.fromString(paddedToken, 16);
+  return (Long.fromString(paddedToken, 16)).toNumber();
 }
 
 const MAX_RESOLUTION = 100;
