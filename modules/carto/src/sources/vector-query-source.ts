@@ -23,6 +23,8 @@ type UrlParameters = {
   tileResolution?: string;
   q: string;
   queryParameters?: Record<string, unknown> | unknown[];
+  limit?: number;
+  wheres?: string;
 };
 
 export const vectorQuerySource = async function (
@@ -34,14 +36,18 @@ export const vectorQuerySource = async function (
     spatialDataColumn = 'geom',
     sqlQuery,
     tileResolution = DEFAULT_TILE_RESOLUTION,
-    queryParameters
+    queryParameters,
+    limit,
+    wheres,
   } = options;
 
   const urlParameters: UrlParameters = {
     spatialDataColumn,
     spatialDataType: 'geo',
     tileResolution: tileResolution.toString(),
-    q: sqlQuery
+    q: sqlQuery,
+    limit,
+    wheres
   };
 
   if (columns) {
@@ -53,5 +59,13 @@ export const vectorQuerySource = async function (
   if (queryParameters) {
     urlParameters.queryParameters = queryParameters;
   }
+  if (limit) {
+    urlParameters.limit = limit;
+  }
+  if (wheres) {
+    urlParameters.wheres = wheres;
+  }
+
+
   return baseSource<UrlParameters>('query', options, urlParameters) as Promise<TilejsonResult>;
 };

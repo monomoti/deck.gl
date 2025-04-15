@@ -23,6 +23,10 @@ export type SourceOptionalOptions = {
 
   apiAuthHeaderName?: string;
 
+  limit?: number;
+
+  wheres?: string;
+
   /**
    * Custom HTTP headers added to map instantiation and data requests.
    */
