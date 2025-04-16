@@ -97,7 +97,10 @@ function createURLWithParameters(
     if (isPureObject(value) || Array.isArray(value)) {
       baseUrl.searchParams.set(key, JSON.stringify(value));
     } else {
-      baseUrl.searchParams.set(key, (value as string | boolean | number).toString());
+      console.log("createURLWithParameters",key, value);
+      if (value !== undefined){
+        baseUrl.searchParams.set(key, (value as string | boolean | number).toString());
+      }
     }
   }
   return baseUrl.toString();

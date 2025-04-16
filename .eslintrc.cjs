@@ -8,7 +8,6 @@ module.exports = getESLintConfig({
       project: ['./tsconfig.json'],
       ecmaVersion: 2020
     },
-    root: true,
     extends: ['prettier'],
 
     env: {
