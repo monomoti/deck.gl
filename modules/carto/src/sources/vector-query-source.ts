@@ -24,7 +24,7 @@ type UrlParameters = {
   q: string;
   queryParameters?: Record<string, unknown> | unknown[];
   limit?: number;
-  wheres?: string;
+  wh?: string;
 };
 
 export const vectorQuerySource = async function (
@@ -45,9 +45,7 @@ export const vectorQuerySource = async function (
     spatialDataColumn,
     spatialDataType: 'geo',
     tileResolution: tileResolution.toString(),
-    q: sqlQuery,
-    limit,
-    wheres
+    q: sqlQuery
   };
 
   if (columns) {
@@ -63,7 +61,7 @@ export const vectorQuerySource = async function (
     urlParameters.limit = limit;
   }
   if (wheres) {
-    urlParameters.wheres = wheres;
+    urlParameters.wh = wheres;
   }
 
 
