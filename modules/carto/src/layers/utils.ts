@@ -8,17 +8,19 @@ import type {TilejsonResult} from '../sources/types';
  * Adds access token to Authorization header in loadOptions
  */
 export function injectAccessToken(loadOptions: any, accessToken: string): void {
-  const apiAuthHeaderName = loadOptions?.apiAuthHeaderName || process.env.REACT_APP_API_AUTH_HEADER_NAME ||null;
-  if (apiAuthHeaderName){
-    if (!loadOptions?.fetch?.headers || !loadOptions?.fetch?.headers[apiAuthHeaderName] ){
-          loadOptions.fetch = {
-        ...loadOptions.fetch,
-        headers: {...loadOptions.fetch?.headers}
-      };
-      loadOptions.fetch.headers[apiAuthHeaderName] = `Bearer ${accessToken}`
+    const apiAuthHeaderName = loadOptions?.apiAuthHeaderName || process.env.REACT_APP_API_AUTH_HEADER_NAME ||null;
+    // const apiAuthHeaderName = loadOptions?.apiAuthHeaderName || null;
+    if (apiAuthHeaderName){
+      if (!loadOptions?.fetch?.headers || !loadOptions?.fetch?.headers[apiAuthHeaderName] ){
+            loadOptions.fetch = {
+          ...loadOptions.fetch,
+          headers: {...loadOptions.fetch?.headers}
+        };
+        loadOptions.fetch.headers[apiAuthHeaderName] = `Bearer ${accessToken}`
+      }
+      return;
     }
-    return;
-  }
+  
   
   if (!loadOptions?.fetch?.headers?.Authorization) {
     loadOptions.fetch = {

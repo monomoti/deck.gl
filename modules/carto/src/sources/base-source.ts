@@ -36,7 +36,8 @@ export async function baseSource<UrlParameters extends Record<string, unknown>>(
   const {clientId, maxLengthURL, format} = mergedOptions;
   // const headers = {Authorization: `Bearer ${options.accessToken}`, ...options.headers};
   let headers;
-  const apiAuthHeaderName = options?.apiAuthHeaderName || process.env.REACT_APP_API_AUTH_HEADER_NAME ||null;
+  const apiAuthHeaderName = options?.apiAuthHeaderName || process.env.REACT_APP_API_AUTH_HEADER_NAME || null ;
+  // const apiAuthHeaderName = options?.apiAuthHeaderName || null ;
   if (apiAuthHeaderName){
     headers = {...options.headers};
     headers[apiAuthHeaderName] = `Bearer ${options.accessToken}`;
