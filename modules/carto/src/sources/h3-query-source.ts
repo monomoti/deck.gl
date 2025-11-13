@@ -22,6 +22,8 @@ type UrlParameters = {
   q: string;
   queryParameters?: Record<string, unknown> | unknown[];
   filters?: Record<string, unknown>;
+  limit?: number;
+  wh?: string;
 };
 
 export const h3QuerySource = async function (
@@ -33,7 +35,9 @@ export const h3QuerySource = async function (
     sqlQuery,
     spatialDataColumn = 'h3',
     queryParameters,
-    filters
+    filters,
+    limit,
+    wheres,
   } = options;
   const urlParameters: UrlParameters = {
     aggregationExp,
@@ -50,6 +54,12 @@ export const h3QuerySource = async function (
   }
   if (filters) {
     urlParameters.filters = filters;
+  }
+  if (limit) {
+    urlParameters.limit = limit;
+  }
+  if (wheres) {
+    urlParameters.wh = wheres;
   }
   return baseSource<UrlParameters>('query', options, urlParameters) as Promise<TilejsonResult>;
 };
